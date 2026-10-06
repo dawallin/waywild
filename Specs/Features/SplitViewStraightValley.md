@@ -98,3 +98,11 @@ rak dal och riktning norr. Generell hinderkollision införs med fri gång.
 Båda vyerna ritas om från modellens position. Fokusförlust eller dold sida
 släpper input; långa frameuppehåll ska inte skapa stora hopp.
 Tester bevisar hastighet, släppt input, stopp vid väggen och synkroniserade vyer.
+
+## Delsteg: bakåtgång
+
+Beställt 2026-10-06. S ger bakåtgång i 3 m/s, W ger framåtgång.
+W och S samtidigt ger stillastående. Spelarcentrum stoppas på z=29,5 m
+vid den bakre ändväggen, med samma radie och väggtjocklek som framåt.
+Vridning och sidogång återstår. Unit-tester och separata webbläsartester
+bevisar bakåtgång, ändvägg och motstridig input.

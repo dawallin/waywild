@@ -3,7 +3,7 @@
 En seed-baserad naturvärld där landskapet döljer en matematisk labyrint.
 Spelaren utforskar världen i förstaperson med fri gång.
 
-En rak dalgång visas som 2D-karta och 3D-vy i förstaperson. Håll W för att gå framåt. Spelaren stoppas vid dalens ändvägg.
+En rak dalgång visas som 2D-karta och 3D-vy i förstaperson. Håll W för att gå framåt och S för att gå bakåt. Spelaren stoppas vid dalens ändväggar.
 
 ## Dokument
 
