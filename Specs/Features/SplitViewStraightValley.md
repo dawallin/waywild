@@ -1,6 +1,6 @@
 # Delad vy och rak dalgång
 
-Status: delsteget ”visa världen” implementerat 2026-10-06. Gång återstår.
+Status: framåt- och bakåtgång implementerade. Vridning beställd 2026-10-07.
 
 ## Syfte
 
@@ -106,3 +106,28 @@ W och S samtidigt ger stillastående. Spelarcentrum stoppas på z=29,5 m
 vid den bakre ändväggen, med samma radie och väggtjocklek som framåt.
 Vridning och sidogång återstår. Unit-tester och separata webbläsartester
 bevisar bakåtgång, ändvägg och motstridig input.
+
+## Delsteg: vridning och riktad gång
+
+Beställt 2026-10-07. A vrider vänster och D höger kontinuerligt, 90°/s.
+Riktningen kan passera norr och fortsätta obegränsat runt; lagras inom [0, 2π).
+A+D ger ingen vridning. Släppt tangent stoppar vridningen. Ingen sidogång.
+W/S följer aktuell riktning i 3 m/s; W+S ger ingen gång men tillåter vridning.
+Vid samtidig gång och vridning vrids spelaren först i varje fast modellsteg.
+Vridning på plats är tillåten även intill hinder. Fokusförlust/dold sida släpper alla tangenter.
+
+Kollision avgränsas här till den raka dalens rektangulära passage.
+Spelarcentrum hålls mellan x=10,35 och 19,65 samt z=0,5 och 29,5 m.
+Vid sned rörelse kapas hela rörelsen vid första kontakt med en gräns;
+ingen glidning längs hinder. Generell kollision för andra kartor definieras senare.
+
+Separata testmål före implementation:
+- A och D vrider åt var sitt håll med 90°/s utan att flytta positionen.
+- Vridning passerar ett helt varv och normaliserar riktningen.
+- A+D ger oförändrad riktning.
+- W och S följer riktningen; W+S står still även efter vridning.
+- Vänster respektive höger sidoberg stoppar spelarradien.
+- Sned kollision stoppar vid kontakt utan glidning; ändväggar fungerar efter vridning.
+- Webbläsaren visar samma riktning i båda vyerna vid A respektive D.
+- Släpp/fokusförlust stoppar vridning; samtidig gång/vridning följer riktningen.
+- Visuell granskning bedömer vridhastighet och kamerans samspel med kartmarkören.
