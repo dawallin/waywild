@@ -43,8 +43,9 @@ När projektet scaffoldas ska samma kommandon användas lokalt och i CI:
 - `npm run build`: produktionsbyggnad till `dist/`.
 
 Webbskalet implementerar dev, preview, build, typecheck och behavior-tester.
-`test:fast` kör tills vidare typkontroll och `test:all` även behavior-tester.
-Unit- och integrationskommandon införs när motsvarande modelltester finns. Inför bara testsuiter som har
+`test:unit` kör modelltester. `test:fast` kör typkontroll och unit-tester;
+`test:all` kör även behavior-tester. Integrationskommandot införs när
+motsvarande tester finns. Inför bara testsuiter som har
 verkliga tester; justera kommandokedjan uttryckligen när nästa testnivå tillkommer.
 
 Verifiera det berörda beteendet först. Inför publicering ska den aktuella

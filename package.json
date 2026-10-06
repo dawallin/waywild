@@ -12,13 +12,19 @@
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "test:behavior": "playwright test",
-    "test:fast": "npm run typecheck",
-    "test:all": "npm run test:fast && npm run test:behavior"
+    "test:fast": "npm run typecheck && npm run test:unit",
+    "test:all": "npm run test:fast && npm run test:behavior",
+    "test:unit": "vitest run tests/unit"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.4",
+    "@types/three": "^0.186.0",
     "typescript": "^7.0.2",
-    "vite": "^8.3.3"
+    "vite": "^8.3.3",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
   }
 }

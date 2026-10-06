@@ -8,8 +8,8 @@ header > p:last-child, footer { color: #a8b8ad; }
 main { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 clamp(1rem, 4vw, 4rem); }
 section { min-width: 0; border: 1px solid #3a4c40; border-radius: .6rem; overflow: hidden; background: #182922; }
 h2 { font-size: 1rem; font-weight: 500; margin: 0; padding: 1rem; border-bottom: 1px solid #3a4c40; }
-.placeholder { min-height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
-.placeholder span { font-size: 3rem; color: #607962; }
-.placeholder p { max-width: 20rem; color: #a8b8ad; }
 footer { padding: 1.5rem clamp(1rem, 4vw, 4rem); font-size: .85rem; }
-@media (max-width: 600px) { .placeholder { min-height: 35vh; } header { padding-top: 1rem; } }
+@media (max-width: 600px) { header { padding-top: 1rem; } }
+
+canvas { display: block; width: 100%; height: 48vh; min-height: 260px; }
+.legend { color: #a8b8ad; font-size: .8rem; padding: .75rem 1rem; margin: 0; }
