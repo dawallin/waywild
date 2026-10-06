@@ -1,12 +1,26 @@
 import './style.css';
+import { mountForwardInput } from './runtime/forwardInput';
+import { createStraightValley } from './scenarios/straightValley';
+import { mountMap } from './runtime/mapView';
+import { mountWorld } from './runtime/worldView';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('App container is missing');
 app.innerHTML = `
-  <header><p class="eyebrow">Every world has a way.</p><h1>Waywild</h1><p>En värld, två perspektiv.</p></header>
+  <header><p class="eyebrow">Every world has a way.</p><h1>Waywild</h1><p>Rak dalgång · 10 meter per ruta</p></header>
   <main aria-label="Världsvyer">
-    <section aria-labelledby="map-title"><h2 id="map-title">Karta</h2><div class="placeholder"><span>01</span><p>Här kommer världen sedd uppifrån.</p></div></section>
-    <section aria-labelledby="world-title"><h2 id="world-title">Förstaperson</h2><div class="placeholder"><span>02</span><p>Här kommer dalgången att ta form.</p></div></section>
+    <section aria-labelledby="map-title"><h2 id="map-title">Karta</h2><canvas id="map" aria-label="3×3-karta med rak passage och spelarens riktning"></canvas><p class="legend">x Berg · o Passage · ▲ Du</p></section>
+    <section aria-labelledby="world-title"><h2 id="world-title">Förstaperson</h2><canvas id="world" aria-label="Dalgång sedd i förstaperson"></canvas><p id="status" class="legend">Ögonhöjd 1,7 m · Blick mot norr</p></section>
   </main>
-  <footer>Första steget: webbskal. Gång och terräng kommer i nästa steg.</footer>
+  <footer>Håll W för att gå framåt · 3 m/s · Släpp för att stanna</footer>
 `;
+const world = createStraightValley();
+const mapView = mountMap(document.querySelector<HTMLCanvasElement>('#map')!, world);
+let worldView: ReturnType<typeof mountWorld> | undefined;
+try { worldView = mountWorld(document.querySelector<HTMLCanvasElement>('#world')!, world); }
+catch (error) {
+  document.querySelector('#status')!.textContent = '3D-vyn kunde inte startas. Din webbläsare behöver stöd för WebGL 2.';
+  console.error(error);
+}
+const disposeInput = worldView ? mountForwardInput(world, () => { mapView.draw(); worldView?.draw(); }) : () => {};
+if (import.meta.hot) import.meta.hot.dispose(() => { disposeInput(); mapView.dispose(); worldView?.dispose(); });

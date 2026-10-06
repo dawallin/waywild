@@ -20,3 +20,15 @@ test('loads production assets without browser errors', async ({ page }) => {
   await expect(page.locator('main')).toHaveCSS('display', 'grid');
   expect(errors).toEqual([]);
 });
+
+
+test('renders the first-person world', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#world')).toHaveAttribute('data-ready', 'true');
+});
+
+test('uses the same player for both views', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#world')).toHaveAttribute('data-ready', 'true');
+  expect(await page.locator('#map').getAttribute('data-player')).toBe(await page.locator('#world').getAttribute('data-player'));
+});

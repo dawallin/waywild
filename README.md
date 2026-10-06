@@ -3,7 +3,7 @@
 En seed-baserad naturvärld där landskapet döljer en matematisk labyrint.
 Spelaren utforskar världen i förstaperson med fri gång.
 
-Första webbskalet är implementerat. Karta och förstapersonsvy är ännu platshållare.
+En rak dalgång visas som 2D-karta och 3D-vy i förstaperson. Håll W för att gå framåt. Spelaren stoppas vid dalens ändvägg.
 
 ## Dokument
 
@@ -43,7 +43,7 @@ GITHUB_PAGES=true npm run test:all
 ```
 
 `npm run preview` visar det senaste produktionsbygget lokalt.
-`test:fast` kör tills vidare typkontroll. Modelltester tillkommer med modellen.
+`test:fast` kör typkontroll och modelltester.
 
 ## Publicering
 

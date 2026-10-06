@@ -1,6 +1,6 @@
 # Delad vy och rak dalgång
 
-Status: accepterad omfattning, 2026-10-06. Detaljer nedan återstår före implementation.
+Status: delsteget ”visa världen” implementerat 2026-10-06. Gång återstår.
 
 ## Syfte
 
@@ -76,3 +76,25 @@ Visuell granskning bekräftar begriplig karta, synliga gränser och användbar f
 
 Dessa detaljer kan lösas i nästa implementationsdiskussion. Mobilprestanda
 är ett långsiktigt mål; första stegets testade enheter och input ska anges uttryckligen.
+
+## Delsteg: visa världen
+
+Beställt 2026-10-06. Statisk spelare; gång och input implementeras i nästa delsteg.
+Rutstorlek 10 m, ögonhöjd 1,7 m. Start x=15 m, z=25 m; riktning norr (-z).
+Kartans x växer åt höger och z nedåt. Berg är enkla facetterade höjdfält
+med branta kanter; dalens ändar avgränsas av låga bergväggar.
+Panelerna har lika bredd och ligger bredvid varandra även på smala skärmar.
+Scenariot är tills vidare standardvyn på appens rotadress.
+Gånghastighet 3 m/s, WASD och piltangenter är accepterade för nästa delsteg.
+Touchkontroller införs senare. Radie och kollisionsdetaljer bestäms inför gångsteget.
+
+## Delsteg: framåt
+
+Beställt 2026-10-06. Håll W för gång rakt norrut; släpp för att stanna.
+Hastighet 3 m/s, fasta modellsteg 1/60 sekund. Spelarradie 0,35 m.
+Ändväggen är 0,3 m tjock, centrerad på z=0; spelarcentrum stannar på z=0,5 m.
+Ingen vridning, bakåtgång eller sidogång ingår. Funktionen är avgränsad till
+rak dal och riktning norr. Generell hinderkollision införs med fri gång.
+Båda vyerna ritas om från modellens position. Fokusförlust eller dold sida
+släpper input; långa frameuppehåll ska inte skapa stora hopp.
+Tester bevisar hastighet, släppt input, stopp vid väggen och synkroniserade vyer.
