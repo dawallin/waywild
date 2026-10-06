@@ -15,3 +15,12 @@ canvas { display: block; width: 100%; height: 48vh; min-height: 260px; }
 .legend { color: #a8b8ad; font-size: .8rem; padding: .75rem 1rem; margin: 0; }
 
 select { font: inherit; padding: .45rem .75rem; border: 1px solid #64746c; border-radius: .35rem; background: #182922; color: #e3ece5; }
+
+#terrain-form { display: inline-flex; align-items: center; gap: .5rem; margin: .75rem 0 .25rem 1rem; flex-wrap: wrap; }
+input, button { font: inherit; padding: .45rem .75rem; border: 1px solid #64746c; border-radius: .35rem; color: #e3ece5; background: #182922; }
+#terrain-seed { width: 10rem; }
+button { cursor: pointer; background: #344d3b; }
+button:hover { background: #45664f; }
+@media (max-width: 600px) { #terrain-form { display: flex; margin-left: 0; } }
+
+button:disabled { opacity: .45; cursor: default; }
