@@ -1,4 +1,4 @@
-import type { World } from '../core/world';
+import { BOUNDARY_WALL_THICKNESS, type World } from '../core/world';
 
 export function mountMap(canvas: HTMLCanvasElement, world: World): { draw: () => void; dispose: () => void } {
   const context = canvas.getContext('2d');
@@ -24,12 +24,16 @@ export function mountMap(canvas: HTMLCanvasElement, world: World): { draw: () =>
       context.textAlign = 'center'; context.textBaseline = 'middle';
       context.fillText(cell, left + (x + .5) * unit, top + (z + .5) * unit);
     }));
+    const inset = BOUNDARY_WALL_THICKNESS / 2 / world.cellSize * unit;
+    context.strokeStyle = '#e3ece5'; context.lineWidth = 2;
+    context.strokeRect(left + inset, top + inset, size - 2 * inset, size - 2 * inset);
     context.save();
     context.translate(left + world.player.x / world.cellSize * unit, top + world.player.z / world.cellSize * unit);
     context.rotate(world.player.heading);
     context.fillStyle = '#ffe8a0'; context.strokeStyle = '#182922'; context.lineWidth = 2;
     context.beginPath(); context.moveTo(0, -unit * .17); context.lineTo(unit * .1, unit * .1); context.lineTo(-unit * .1, unit * .1); context.closePath(); context.fill(); context.stroke();
     context.restore();
+    canvas.dataset.cells = JSON.stringify(world.cells);
     canvas.dataset.player = JSON.stringify(world.player);
   };
   const observer = new ResizeObserver(draw); observer.observe(canvas); draw();

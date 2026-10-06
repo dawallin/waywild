@@ -13,3 +13,5 @@ footer { padding: 1.5rem clamp(1rem, 4vw, 4rem); font-size: .85rem; }
 
 canvas { display: block; width: 100%; height: 48vh; min-height: 260px; }
 .legend { color: #a8b8ad; font-size: .8rem; padding: .75rem 1rem; margin: 0; }
+
+select { font: inherit; padding: .45rem .75rem; border: 1px solid #64746c; border-radius: .35rem; background: #182922; color: #e3ece5; }

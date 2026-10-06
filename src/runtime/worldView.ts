@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { terrainHeight, type World } from '../core/world';
+import { BOUNDARY_WALL_HEIGHT, BOUNDARY_WALL_THICKNESS, worldBounds, terrainHeight, type World } from '../core/world';
 
 export function mountWorld(canvas: HTMLCanvasElement, world: World): { draw: () => void; dispose: () => void } {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -13,10 +13,11 @@ export function mountWorld(canvas: HTMLCanvasElement, world: World): { draw: () 
   camera.position.set(world.player.x, world.player.eyeHeight, world.player.z);
   camera.lookAt(world.player.x + Math.sin(world.player.heading), world.player.eyeHeight, world.player.z - Math.cos(world.player.heading));
   const resources: Array<THREE.BufferGeometry | THREE.Material> = [];
-  const groundGeometry = new THREE.PlaneGeometry(30, 30);
+  const { width, depth } = worldBounds(world);
+  const groundGeometry = new THREE.PlaneGeometry(width, depth);
   groundGeometry.rotateX(-Math.PI / 2);
   const groundMaterial = new THREE.MeshLambertMaterial({ color: '#a3b47e' });
-  const ground = new THREE.Mesh(groundGeometry, groundMaterial); ground.position.set(15, 0, 15); scene.add(ground);
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial); ground.position.set(width / 2, 0, depth / 2); scene.add(ground);
   resources.push(groundGeometry, groundMaterial);
   const rock = new THREE.MeshLambertMaterial({ color: '#78877b', flatShading: true }); resources.push(rock);
   world.cells.forEach((row, z) => [...row].forEach((cell, x) => {
@@ -45,15 +46,23 @@ export function mountWorld(canvas: HTMLCanvasElement, world: World): { draw: () 
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3)); geometry.setIndex(indices); geometry.computeVertexNormals();
     scene.add(new THREE.Mesh(geometry, rock)); resources.push(geometry);
   }));
-  // Visible end boundaries, matching the movement stop distance.
-  const endGeometry = new THREE.BoxGeometry(10, 3, .3); resources.push(endGeometry);
-  for (const z of [0,30]) { const end = new THREE.Mesh(endGeometry, rock); end.position.set(15,1.5,z); scene.add(end); }
+  const horizontal = new THREE.BoxGeometry(width, BOUNDARY_WALL_HEIGHT, BOUNDARY_WALL_THICKNESS);
+  const vertical = new THREE.BoxGeometry(BOUNDARY_WALL_THICKNESS, BOUNDARY_WALL_HEIGHT, depth);
+  resources.push(horizontal, vertical);
+  for (const z of [0, depth]) {
+    const wall = new THREE.Mesh(horizontal, rock);
+    wall.position.set(width / 2, BOUNDARY_WALL_HEIGHT / 2, z); scene.add(wall);
+  }
+  for (const x of [0, width]) {
+    const wall = new THREE.Mesh(vertical, rock);
+    wall.position.set(x, BOUNDARY_WALL_HEIGHT / 2, depth / 2); scene.add(wall);
+  }
   const draw = () => {
     const {width,height}=canvas.getBoundingClientRect(); if (!width || !height) return;
     camera.position.set(world.player.x, world.player.eyeHeight, world.player.z);
     camera.lookAt(world.player.x + Math.sin(world.player.heading), world.player.eyeHeight, world.player.z - Math.cos(world.player.heading));
     renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); renderer.render(scene,camera);
-    canvas.dataset.player=JSON.stringify(world.player); canvas.dataset.ready='true';
+    canvas.dataset.player=JSON.stringify(world.player); canvas.dataset.ready='true'; canvas.dataset.cells=JSON.stringify(world.cells);
   };
   const observer=new ResizeObserver(draw); observer.observe(canvas); draw();
   return { draw, dispose: () => { observer.disconnect(); resources.forEach(resource=>resource.dispose()); renderer.dispose(); } };
