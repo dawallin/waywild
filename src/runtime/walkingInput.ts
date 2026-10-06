@@ -1,20 +1,21 @@
-import { stepWalking, STEP_SECONDS } from '../core/movement';
+import { stepTurning, stepWalking, STEP_SECONDS } from '../core/movement';
 import type { World } from '../core/world';
 
 export function mountWalkingInput(world: World, redraw: () => void): () => void {
-  let forward = false, backward = false, previous: number | undefined, accumulator = 0, frame = 0;
-  const reset = () => { forward = false; backward = false; previous = undefined; accumulator = 0; };
+  let left = false, right = false, forward = false, backward = false, previous: number | undefined, accumulator = 0, frame = 0;
+  const reset = () => { left = false; right = false; forward = false; backward = false; previous = undefined; accumulator = 0; };
   const keydown = (event: KeyboardEvent) => {
-    if (!['KeyW', 'KeyS'].includes(event.code) || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (!['KeyW', 'KeyS', 'KeyA', 'KeyD'].includes(event.code) || event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.target instanceof HTMLElement && (event.target.isContentEditable || ['INPUT','TEXTAREA','SELECT'].includes(event.target.tagName))) return;
-    event.preventDefault(); if (event.code === 'KeyW') forward = true; else backward = true;
+    event.preventDefault(); if (event.code === 'KeyW') forward = true; else if (event.code === 'KeyS') backward = true; else if (event.code === 'KeyA') left = true; else right = true;
   };
-  const keyup = (event: KeyboardEvent) => { if (event.code === 'KeyW') forward = false; if (event.code === 'KeyS') backward = false; };
+  const keyup = (event: KeyboardEvent) => { if (event.code === 'KeyW') forward = false; if (event.code === 'KeyS') backward = false; if (event.code === 'KeyA') left = false; if (event.code === 'KeyD') right = false; };
   const tick = (now: number) => {
     if (previous !== undefined) accumulator += Math.min((now - previous) / 1000, 0.1);
     previous = now;
     let changed = false;
     while (accumulator >= STEP_SECONDS) {
+      changed = stepTurning(world, left, right) || changed;
       changed = stepWalking(world, forward, backward) || changed;
       accumulator -= STEP_SECONDS;
     }
