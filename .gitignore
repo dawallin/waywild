@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Builds and tool caches
+dist/
+.vite/
+*.tsbuildinfo
+
+# Test reports
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# macOS
+.DS_Store

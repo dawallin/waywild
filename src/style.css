@@ -1,0 +1,15 @@
+:root { font-family: system-ui, sans-serif; color: #e3ece5; background: #101c17; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header { padding: 2rem clamp(1rem, 4vw, 4rem); }
+.eyebrow { color: #a9bd9f; text-transform: uppercase; letter-spacing: .15em; font-size: .75rem; }
+h1 { margin: .4rem 0; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 500; }
+header > p:last-child, footer { color: #a8b8ad; }
+main { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 clamp(1rem, 4vw, 4rem); }
+section { min-width: 0; border: 1px solid #3a4c40; border-radius: .6rem; overflow: hidden; background: #182922; }
+h2 { font-size: 1rem; font-weight: 500; margin: 0; padding: 1rem; border-bottom: 1px solid #3a4c40; }
+.placeholder { min-height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
+.placeholder span { font-size: 3rem; color: #607962; }
+.placeholder p { max-width: 20rem; color: #a8b8ad; }
+footer { padding: 1.5rem clamp(1rem, 4vw, 4rem); font-size: .85rem; }
+@media (max-width: 600px) { .placeholder { min-height: 35vh; } header { padding-top: 1rem; } }
