@@ -18,6 +18,7 @@ Förslag blir beslut när de har accepterats i diskussionen med användaren.
 - [DevelopmentLoop](Foundation/DevelopmentLoop.md)
 - [WebShell](Features/WebShell.md)
 - [SplitViewStraightValley](Features/SplitViewStraightValley.md)
+- [MapSelection](Features/MapSelection.md)
 
 ## Ordning för första utvecklingsstegen
 

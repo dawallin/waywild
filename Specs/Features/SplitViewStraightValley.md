@@ -131,3 +131,5 @@ Separata testmål före implementation:
 - Webbläsaren visar samma riktning i båda vyerna vid A respektive D.
 - Släpp/fokusförlust stoppar vridning; samtidig gång/vridning följer riktningen.
 - Visuell granskning bedömer vridhastighet och kamerans samspel med kartmarkören.
+
+Aktuella kartval, ytterväggar och generell rutkollision definieras i [MapSelection](MapSelection.md).

@@ -15,3 +15,10 @@ export function terrainHeight(world: World, x: number, z: number): number {
   const localZ = (z % world.cellSize) / world.cellSize;
   return 3 + 8 * Math.sin(Math.PI * localX) * Math.sin(Math.PI * localZ);
 }
+
+export const BOUNDARY_WALL_THICKNESS = 0.3;
+export const BOUNDARY_WALL_HEIGHT = 11;
+
+export function worldBounds(world: World) {
+  return { width: world.cells[0].length * world.cellSize, depth: world.cells.length * world.cellSize };
+}
