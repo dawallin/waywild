@@ -12,8 +12,10 @@ export function mountMap(canvas: HTMLCanvasElement, world: World): { draw: () =>
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     context.fillStyle = '#182922'; context.fillRect(0, 0, width, height);
     const size = Math.min(width, height) * .82;
-    const unit = size / 3;
-    const left = (width - size) / 2, top = (height - size) / 2;
+    const rows = world.cells.length, columns = world.cells[0].length;
+    const unit = size / Math.max(rows, columns);
+    const mapWidth = columns * unit, mapHeight = rows * unit;
+    const left = (width - mapWidth) / 2, top = (height - mapHeight) / 2;
     world.cells.forEach((row, z) => [...row].forEach((cell, x) => {
       context.fillStyle = cell === 'x' ? '#64746c' : '#b5c999';
       context.fillRect(left + x * unit, top + z * unit, unit, unit);
@@ -26,13 +28,15 @@ export function mountMap(canvas: HTMLCanvasElement, world: World): { draw: () =>
     }));
     const inset = BOUNDARY_WALL_THICKNESS / 2 / world.cellSize * unit;
     context.strokeStyle = '#e3ece5'; context.lineWidth = 2;
-    context.strokeRect(left + inset, top + inset, size - 2 * inset, size - 2 * inset);
+    context.strokeRect(left + inset, top + inset, mapWidth - 2 * inset, mapHeight - 2 * inset);
     context.save();
     context.translate(left + world.player.x / world.cellSize * unit, top + world.player.z / world.cellSize * unit);
     context.rotate(world.player.heading);
     context.fillStyle = '#ffe8a0'; context.strokeStyle = '#182922'; context.lineWidth = 2;
-    context.beginPath(); context.moveTo(0, -unit * .17); context.lineTo(unit * .1, unit * .1); context.lineTo(-unit * .1, unit * .1); context.closePath(); context.fill(); context.stroke();
+    const marker = Math.max(5, unit * .17);
+    context.beginPath(); context.moveTo(0, -marker); context.lineTo(marker * .6, marker * .6); context.lineTo(-marker * .6, marker * .6); context.closePath(); context.fill(); context.stroke();
     context.restore();
+    canvas.dataset.seed = String(world.seed);
     canvas.dataset.cells = JSON.stringify(world.cells);
     canvas.dataset.player = JSON.stringify(world.player);
   };

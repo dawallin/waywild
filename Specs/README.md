@@ -19,6 +19,7 @@ Förslag blir beslut när de har accepterats i diskussionen med användaren.
 - [WebShell](Features/WebShell.md)
 - [SplitViewStraightValley](Features/SplitViewStraightValley.md)
 - [MapSelection](Features/MapSelection.md)
+- [SeededMountains](Features/SeededMountains.md)
 
 ## Ordning för första utvecklingsstegen
 
