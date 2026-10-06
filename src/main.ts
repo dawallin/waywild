@@ -1,5 +1,5 @@
 import './style.css';
-import { mountForwardInput } from './runtime/forwardInput';
+import { mountWalkingInput } from './runtime/walkingInput';
 import { createStraightValley } from './scenarios/straightValley';
 import { mountMap } from './runtime/mapView';
 import { mountWorld } from './runtime/worldView';
@@ -12,7 +12,7 @@ app.innerHTML = `
     <section aria-labelledby="map-title"><h2 id="map-title">Karta</h2><canvas id="map" aria-label="3×3-karta med rak passage och spelarens riktning"></canvas><p class="legend">x Berg · o Passage · ▲ Du</p></section>
     <section aria-labelledby="world-title"><h2 id="world-title">Förstaperson</h2><canvas id="world" aria-label="Dalgång sedd i förstaperson"></canvas><p id="status" class="legend">Ögonhöjd 1,7 m · Blick mot norr</p></section>
   </main>
-  <footer>Håll W för att gå framåt · 3 m/s · Släpp för att stanna</footer>
+  <footer>W framåt · S bakåt · 3 m/s · Släpp för att stanna</footer>
 `;
 const world = createStraightValley();
 const mapView = mountMap(document.querySelector<HTMLCanvasElement>('#map')!, world);
@@ -22,5 +22,5 @@ catch (error) {
   document.querySelector('#status')!.textContent = '3D-vyn kunde inte startas. Din webbläsare behöver stöd för WebGL 2.';
   console.error(error);
 }
-const disposeInput = worldView ? mountForwardInput(world, () => { mapView.draw(); worldView?.draw(); }) : () => {};
+const disposeInput = worldView ? mountWalkingInput(world, () => { mapView.draw(); worldView?.draw(); }) : () => {};
 if (import.meta.hot) import.meta.hot.dispose(() => { disposeInput(); mapView.dispose(); worldView?.dispose(); });
